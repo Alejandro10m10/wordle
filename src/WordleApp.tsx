@@ -1,7 +1,9 @@
+import { AppRouter } from "./router/AppRouter";
+
 export const WordleApp = () => {
   return (
     <>
-      <div>WordleApp</div>
+      <AppRouter />
     </>
   );
 };

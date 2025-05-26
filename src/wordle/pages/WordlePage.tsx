@@ -1,7 +1,9 @@
+import { WordleLayout } from "../layout";
+
 export const WordlePage = () => {
   return (
     <>
-      <div>WordlePage</div>
+      <WordleLayout></WordleLayout>
     </>
   );
 };

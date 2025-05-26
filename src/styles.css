@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+}
+
+* {
+}
+
+html {
+  font-family: "Inter", sans-serif, Arial, Helvetica;
+}

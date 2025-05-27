@@ -1,0 +1,16 @@
+import { KEY_BOARD_ARR } from "../constants";
+import { KeyBox } from "./";
+
+export const Keyboard = () => {
+  return (
+    <div className="keyboard flex items-center gap-1 flex-col w-full">
+      {KEY_BOARD_ARR.map((keyBoardRow, rowIndex) => (
+        <div key={`row-${rowIndex}`} className="flex gap-1">
+          {keyBoardRow.map((key) => (
+            <KeyBox key={key} keyValue={key} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};

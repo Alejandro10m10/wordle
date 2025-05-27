@@ -1,4 +1,11 @@
 @import "tailwindcss";
+@tailwind utilities;
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-dark: #131416;
+}
 
 :root {
 }
@@ -8,4 +15,9 @@
 
 html {
   font-family: "Inter", sans-serif, Arial, Helvetica;
+}
+
+html.disable-transitions *,
+html.disable-transitions {
+  transition: none !important;
 }

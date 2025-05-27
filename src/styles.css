@@ -5,6 +5,8 @@
 
 @theme {
   --color-dark: #131416;
+  --color-gray-200: #5e6a7b;
+  --color-gray-400: #3f4752;
   --color-gray-500: #f4f5fcb3;
   --color-gray-900: #27272a;
   --scrollColor: #909090;

@@ -1,8 +1,14 @@
-export const Sidebar = () => {
+import { SidebarConfig } from "../types";
+
+export const Sidebar: React.FC<SidebarConfig> = ({ isSidebarCollapsed }) => {
   return (
-    <div className="w-64 absolute top-0 border-r border-gray-900">
-      <section className="p-2">
-        <button className="grid grid-cols-[32px_1fr_16px] gap-2 p-2 items-center w-full">
+    <div
+      className={`absolute top-0 w-64 transition-all duration-300 border-r border-gray-900 ${
+        isSidebarCollapsed ? "-left-64" : "left-0"
+      }`}
+    >
+      <section className={`p-2 w-full h-16 `}>
+        <button className="grid grid-cols-[32px_1fr_16px] gap-2 p-2 items-center w-full hover:bg-gray-900 rounded-md cursor-pointer">
           <img
             className="w-8 h-8 rounded-lg"
             src={"/src/assets/imgs/appIcon.png"}
@@ -37,7 +43,7 @@ export const Sidebar = () => {
           <h3 className="text-xs text-gray-500 p-2">Modos de juego</h3>
           <ul className="flex flex-col gap-1">
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -77,7 +83,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -125,7 +131,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -161,7 +167,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -199,7 +205,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -243,7 +249,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -286,7 +292,7 @@ export const Sidebar = () => {
           <h3 className="text-xs text-gray-500 p-2">Archivo</h3>
           <ul className="flex flex-col gap-1">
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -326,7 +332,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -362,7 +368,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -400,7 +406,7 @@ export const Sidebar = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2">
+              <button className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -450,12 +456,12 @@ export const Sidebar = () => {
           </ul>
         </nav>
         <nav className="p-2">
-          <h3 className="text-xs text-gray-500 p-2">Archivo</h3>
+          <h3 className="text-xs text-gray-500 p-2">Información</h3>
           <ul className="flex flex-col gap-1">
             <li>
               <a
                 href="#"
-                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2"
+                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2"
               >
                 <span className="text-sm">Como jugar</span>
               </a>
@@ -463,7 +469,7 @@ export const Sidebar = () => {
             <li>
               <a
                 href="#"
-                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2"
+                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2"
               >
                 <span className="text-sm">Como jugar - Frase</span>
               </a>
@@ -471,7 +477,7 @@ export const Sidebar = () => {
             <li>
               <a
                 href="#"
-                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2"
+                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2"
               >
                 <span className="text-sm">Blog</span>
               </a>
@@ -479,7 +485,7 @@ export const Sidebar = () => {
             <li>
               <a
                 href="#"
-                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2"
+                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2"
               >
                 <span className="text-sm">Estadísticas</span>
               </a>
@@ -487,7 +493,7 @@ export const Sidebar = () => {
             <li>
               <a
                 href="#"
-                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded cursor-pointer py-1.5 px-2"
+                className="flex items-center gap-2 w-full hover:bg-gray-900 rounded-md cursor-pointer py-1.5 px-2"
               >
                 <span className="text-sm">Contacto</span>
               </a>

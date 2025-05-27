@@ -1,11 +1,22 @@
-export const Navbar = () => {
+import { NavbarProps } from "../types";
+
+export const Navbar: React.FC<NavbarProps> = ({
+  sidebarConfig: sideBarConfig,
+}) => {
+  const onHandleCollapseSideBar = () => {
+    sideBarConfig.onCollapseSideBar();
+  };
+
   return (
     <nav className="grid place-content-center" style={{ height: "50px" }}>
       <ul className="grid grid-cols-3 place-items-center">
         <li>
           <ul className="flex items-center justify-center gap-1">
             <li>
-              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded">
+              <button
+                onClick={onHandleCollapseSideBar}
+                className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded-md"
+              >
                 {/* Icon: layout-sidebar-right-collapse */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +28,11 @@ export const Navbar = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="lucide lucide-panel-right-close h-5 w-5 text-neutral-500 duration-300 ease-in-out rotate-0"
+                  className={`lucide lucide-panel-right-close h-5 w-5 text-neutral-500 ease-in-out transition-transform duration-300 ${
+                    sideBarConfig.isSidebarCollapsed
+                      ? "rotate-[180deg]"
+                      : "rotate-0"
+                  }`}
                 >
                   <rect
                     width="18"
@@ -45,7 +60,7 @@ export const Navbar = () => {
               </button>
             </li>
             <li>
-              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded">
+              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded-md">
                 {/* Icon: user */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +99,7 @@ export const Navbar = () => {
         <li>
           <ul className="flex items-center justify-center gap-1">
             <li>
-              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded">
+              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded-md">
                 {/* Icon: trending-up */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +129,7 @@ export const Navbar = () => {
               </button>
             </li>
             <li>
-              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded">
+              <button className="h-10 w-10 grid place-items-center cursor-pointer hover:bg-gray-900 rounded-md">
                 {/* Icon: adjustments-horizontal */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -5,6 +5,9 @@
 
 @theme {
   --color-dark: #131416;
+  --color-gray-500: #f4f5fcb3;
+  --color-gray-900: #27272a;
+  --scrollColor: #909090;
 }
 
 :root {
@@ -20,4 +23,46 @@ html {
 html.disable-transitions *,
 html.disable-transitions {
   transition: none !important;
+}
+
+/* Custom Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px grey;  */
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollColor);
+  border-radius: 10px;
+  height: 1px;
+}
+
+/* Handle on hover */
+
+footer::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+footer:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollColor);
+}
+
+.no-display {
+  display: none;
+}
+
+.grid {
+  display: grid;
+}
+
+.no-visible {
+  visibility: hidden;
 }

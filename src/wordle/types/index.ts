@@ -11,6 +11,11 @@ export type WordleLayoutProps = {
   children: React.ReactNode;
 };
 
+export type GuessKeyBoxProps = {
+  row: number;
+  column: number;
+};
+
 export interface KeyBoxProps {
   keyValue: string;
 }

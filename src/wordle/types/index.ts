@@ -11,11 +11,33 @@ export type WordleLayoutProps = {
   children: React.ReactNode;
 };
 
-export type GuessKeyBoxProps = {
-  row: number;
-  column: number;
-};
+export interface GuessKeyBoxProps extends KeyBoxSelected {
+  wordGuessingArr: string[];
+  onKeyBoxClicked: (row: number, column: number) => void;
+  keyBoxSelected: KeyBoxSelected;
+}
 
-export interface KeyBoxProps {
+interface OnKeyClickedProps {
+  onKeyClicked: (keyClicked: string) => void;
+}
+
+export interface KeyBoxProps extends OnKeyClickedProps {
   keyValue: string;
 }
+
+export interface KeyBoardProps extends OnKeyClickedProps {}
+
+interface OnKeyClickedProps {
+  onKeyClicked: (keyClicked: string) => void;
+}
+
+export interface GuessBoardProps {
+  lastKeySelected: string;
+}
+
+export interface KeyBoxSelected {
+  row: number;
+  column: number;
+}
+
+export interface UseWordleProps extends GuessBoardProps, KeyBoxSelected {}

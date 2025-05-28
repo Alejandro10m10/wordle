@@ -1,9 +1,38 @@
-import { BOARD_COLUMNS_ARRAY, BOARD_ROWS_ARRAY } from "../constants";
+import {
+  BOARD_COLUMNS_ARRAY,
+  BOARD_ROWS_ARRAY,
+  INITIAL_KEY_BOX_SELECTED,
+} from "../constants";
 import { GuessKeyBox } from "./GuessKeyBox";
+import { GuessBoardProps } from "../types";
+import { useEffect, useRef, useState } from "react";
+import { useWordle } from "../hooks";
 
-export const GuessBoard = () => {
+export const GuessBoard: React.FC<GuessBoardProps> = ({ lastKeySelected }) => {
+  const [keyBoxSelected, setKeyBoxSelected] = useState(
+    INITIAL_KEY_BOX_SELECTED
+  );
+  const { wordGuessingArr, wordGuessing } = useWordle({
+    lastKeySelected,
+    ...keyBoxSelected,
+  });
+
+  const firstBoxRef = useRef<HTMLDivElement>(null);
+
+  const onKeyBoxClicked = (row: number, column: number) => {
+    setKeyBoxSelected({ row, column });
+  };
+
+  useEffect(() => {
+    firstBoxRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    console.log(wordGuessingArr);
+  }, [wordGuessing]);
+
   return (
-    <div className="keyboard-guess flex items-center gap-1 flex-col w-full">
+    <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">
       {BOARD_COLUMNS_ARRAY.map((_, rowIndex) => (
         <div key={`keyboard-guess-row-${rowIndex}`} className="flex gap-1">
           {BOARD_ROWS_ARRAY.map((_, columnIndex) => (
@@ -11,6 +40,12 @@ export const GuessBoard = () => {
               key={`keyboard-guess-column-${columnIndex}`}
               row={rowIndex}
               column={columnIndex}
+              wordGuessingArr={wordGuessingArr}
+              onKeyBoxClicked={onKeyBoxClicked}
+              keyBoxSelected={keyBoxSelected}
+              boxRef={
+                rowIndex === 0 && columnIndex === 0 ? firstBoxRef : undefined
+              }
             />
           ))}
         </div>

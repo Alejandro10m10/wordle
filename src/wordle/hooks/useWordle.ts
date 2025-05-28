@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UseWordleProps } from "../types";
-import { BOARD_COLUMNS, BOARD_COLUMNS_ARRAY, BOARD_ROWS } from "../constants";
+import { BOARD_ROWS } from "../constants";
 import { SpecialCharacter } from "../enums";
 
 const replaceLetterAtWordArr = (
@@ -8,29 +8,32 @@ const replaceLetterAtWordArr = (
   index: number,
   letter: string
 ) => {
-  if (letter === "") return wordArray;
+  const updated = [...wordArray];
+  if (letter === "") return updated;
   if (letter === SpecialCharacter.Backspace) letter = "";
-  wordArray[index] = letter;
-  return wordArray;
+  updated[index] = letter;
+  return updated;
 };
 
 const initialWordGuessingArr = Array.from({ length: BOARD_ROWS }, (_) => "");
 
-export const useWordle = ({ lastKeySelected, column }: UseWordleProps) => {
-  const [wordToGuess, setWordToGuess] = useState("HELLO");
-
+export const useWordle = ({ keyTrigger, column }: UseWordleProps) => {
+  const [wordToGuess] = useState("HELLO");
   const [wordGuessingArr, setWordGuessingArr] = useState<string[]>(
     initialWordGuessingArr
   );
   const [wordGuessing, setWordGuessing] = useState("");
 
   useEffect(() => {
-    setWordGuessingArr(
-      replaceLetterAtWordArr(wordGuessingArr, column, lastKeySelected)
+    if (!keyTrigger.key) return;
+    const newWordGuessingArr = replaceLetterAtWordArr(
+      wordGuessingArr,
+      column,
+      keyTrigger.key
     );
-
-    setWordGuessing(wordGuessingArr.join(""));
-  }, [lastKeySelected]);
+    setWordGuessingArr(newWordGuessingArr);
+    setWordGuessing(newWordGuessingArr.join(""));
+  }, [keyTrigger.id]);
 
   return {
     wordToGuess,

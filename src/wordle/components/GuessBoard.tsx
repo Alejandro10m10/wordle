@@ -5,27 +5,23 @@ import {
 } from "../constants";
 import { GuessKeyBox } from "./GuessKeyBox";
 import { GuessBoardProps } from "../types";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useWordle } from "../hooks";
 
 export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
   const [keyBoxSelected, setKeyBoxSelected] = useState(
     INITIAL_KEY_BOX_SELECTED
   );
-  const { wordGuessingArr } = useWordle({
-    keyTrigger,
-    ...keyBoxSelected,
-  });
-
-  const firstBoxRef = useRef<HTMLDivElement>(null);
 
   const onKeyBoxClicked = (row: number, column: number) => {
     setKeyBoxSelected({ row, column });
   };
 
-  useEffect(() => {
-    firstBoxRef.current?.focus();
-  }, []);
+  const { wordGuessingArr } = useWordle({
+    keyTrigger,
+    ...keyBoxSelected,
+    onKeyBoxClicked,
+  });
 
   return (
     <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">
@@ -39,9 +35,6 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
               wordGuessingArr={wordGuessingArr}
               onKeyBoxClicked={onKeyBoxClicked}
               keyBoxSelected={keyBoxSelected}
-              boxRef={
-                rowIndex === 0 && columnIndex === 0 ? firstBoxRef : undefined
-              }
             />
           ))}
         </div>

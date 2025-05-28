@@ -67,13 +67,13 @@ const displayKey = (key: string) => {
   return <p>{key}</p>;
 };
 
-export const KeyBox: React.FC<KeyBoxProps> = ({ keyValue }) => {
+export const KeyBox: React.FC<KeyBoxProps> = ({ keyValue, onKeyClicked }) => {
   let isSpecialCharacter =
     keyValue === SpecialCharacter.Enter ||
     keyValue === SpecialCharacter.Backspace;
 
   const onClickKey = () => {
-    console.log(keyValue);
+    onKeyClicked(keyValue);
   };
 
   return (

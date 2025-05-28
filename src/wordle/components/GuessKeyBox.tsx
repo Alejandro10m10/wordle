@@ -1,20 +1,14 @@
 import { useEffect, useRef } from "react";
 import { GuessKeyBoxProps } from "../types";
 
-export const GuessKeyBox: React.FC<
-  GuessKeyBoxProps & {
-    boxRef?: React.RefObject<HTMLDivElement | null>;
-  }
-> = ({
+export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   row,
   wordGuessingArr,
   column,
   onKeyBoxClicked,
   keyBoxSelected,
-  boxRef,
 }) => {
-  const internalRef = useRef<HTMLDivElement>(null);
-  const ref = boxRef ?? internalRef;
+  const ref = useRef<HTMLDivElement>(null);
 
   const isFirstRow = row === 0;
 

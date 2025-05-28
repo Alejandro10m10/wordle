@@ -40,7 +40,9 @@ export interface KeyBoxSelected {
   column: number;
 }
 
-export interface UseWordleProps extends GuessBoardProps, KeyBoxSelected {}
+export interface UseWordleProps extends GuessBoardProps, KeyBoxSelected {
+  onKeyBoxClicked: (row: number, column: number) => void;
+}
 
 export interface KeyTrigger {
   key: string;

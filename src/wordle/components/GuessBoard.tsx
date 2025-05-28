@@ -8,12 +8,12 @@ import { GuessBoardProps } from "../types";
 import { useEffect, useRef, useState } from "react";
 import { useWordle } from "../hooks";
 
-export const GuessBoard: React.FC<GuessBoardProps> = ({ lastKeySelected }) => {
+export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
   const [keyBoxSelected, setKeyBoxSelected] = useState(
     INITIAL_KEY_BOX_SELECTED
   );
-  const { wordGuessingArr, wordGuessing } = useWordle({
-    lastKeySelected,
+  const { wordGuessingArr } = useWordle({
+    keyTrigger,
     ...keyBoxSelected,
   });
 
@@ -26,10 +26,6 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ lastKeySelected }) => {
   useEffect(() => {
     firstBoxRef.current?.focus();
   }, []);
-
-  useEffect(() => {
-    console.log(wordGuessingArr);
-  }, [wordGuessing]);
 
   return (
     <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">

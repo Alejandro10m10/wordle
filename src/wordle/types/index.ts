@@ -32,7 +32,7 @@ interface OnKeyClickedProps {
 }
 
 export interface GuessBoardProps {
-  lastKeySelected: string;
+  keyTrigger: KeyTrigger;
 }
 
 export interface KeyBoxSelected {
@@ -41,3 +41,8 @@ export interface KeyBoxSelected {
 }
 
 export interface UseWordleProps extends GuessBoardProps, KeyBoxSelected {}
+
+export interface KeyTrigger {
+  key: string;
+  id: number;
+}

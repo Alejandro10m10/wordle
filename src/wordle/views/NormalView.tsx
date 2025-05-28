@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { GuessBoard, Keyboard } from "../components";
+import { KeyTrigger } from "../types";
+
+const initialKeyTriggerState: KeyTrigger = {
+  key: "",
+  id: 0,
+};
 
 export const NormalView = () => {
-  const [lastKeySelected, setLastKeySelected] = useState("");
+  const [keyTrigger, setKeyTrigger] = useState(initialKeyTriggerState);
 
-  const onKeyClicked = (keyClicked: string) => {
-    setLastKeySelected(keyClicked);
+  const onKeyClicked = (key: string) => {
+    setKeyTrigger({ key, id: Date.now() });
   };
 
   return (
     <div className="grid gap-2.5">
-      <GuessBoard lastKeySelected={lastKeySelected} />
+      <GuessBoard keyTrigger={keyTrigger} />
       <Keyboard onKeyClicked={onKeyClicked} />
     </div>
   );

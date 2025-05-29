@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navbar, Sidebar } from "../components";
 import { NavbarProps, SidebarConfig, WordleLayoutProps } from "../types";
+import { AlertProvider } from "../context/AlertContext";
 
 export const WordleLayout: React.FC<WordleLayoutProps> = ({ children }) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -19,16 +20,14 @@ export const WordleLayout: React.FC<WordleLayoutProps> = ({ children }) => {
   };
 
   return (
-    <>
+    <AlertProvider>
       <Navbar {...navbarConfig} />
       <Sidebar {...sidebarConfig} />
       <main
-        className={` h-[calc(100dvh-50px)] transition-all duration-300 ${
-          isSidebarCollapsed ? "ml-0" : "ml-64"
-        }`}
+        className={` h-[calc(100dvh-50px)] transition-all duration-300 ml-0`}
       >
         {children}
       </main>
-    </>
+    </AlertProvider>
   );
 };

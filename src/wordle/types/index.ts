@@ -48,3 +48,12 @@ export interface KeyTrigger {
   key: string;
   id: number;
 }
+
+export interface AlertPopupProps {
+  message: string;
+  onClose: () => void;
+}
+
+export interface AlertContextType {
+  showAlert: (message: string) => void;
+}

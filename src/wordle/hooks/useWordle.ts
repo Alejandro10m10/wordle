@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UseWordleProps } from "../types";
 import { BOARD_ROWS } from "../constants";
 import { SpecialCharacter } from "../enums";
+import { useAlert } from "../context";
 
 const isBackSpaceKey = (key: string): boolean => {
   return key === SpecialCharacter.Backspace;
@@ -40,23 +41,28 @@ export const useWordle = ({
     initialWordGuessingArr
   );
   const [wordGuessing, setWordGuessing] = useState("");
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     onKeyTrigger();
   }, [keyTrigger.id]);
 
   const onKeyTrigger = () => {
-    if (!keyTrigger.key) return;
+    const key = keyTrigger.key;
+    if (!key) return;
 
-    if (isEnterKey(keyTrigger.key)) return;
+    if (isEnterKey(key)) {
+      validateGuessWord();
+      return;
+    }
 
     const newWordGuessingArr = replaceLetterAtWordArr(
       wordGuessingArr,
       column,
-      keyTrigger.key
+      key
     );
     setWordGuessingArr(newWordGuessingArr);
-    setWordGuessing(newWordGuessingArr.join(""));
+    setWordGuessing(newWordGuessingArr.join("").trim());
 
     onKeyBoxClicked(row, getNextBoxToClick());
   };
@@ -68,6 +74,13 @@ export const useWordle = ({
     }
 
     return column < BOARD_ROWS ? column + 1 : column;
+  };
+
+  const validateGuessWord = () => {
+    if (wordGuessing.length !== BOARD_ROWS) {
+      //showAlert("No hay suficientes letras");
+      return;
+    }
   };
 
   return {

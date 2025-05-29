@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { GuessKeyBoxProps } from "../types";
 
 export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
@@ -17,28 +17,10 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
 
   const onGuessKeyBoxClicked = () => {
     ref.current?.focus();
+    ref.current?.blur();
     if (!isFirstRow) return;
     onKeyBoxClicked(row, column);
   };
-
-  useEffect(() => {
-    const handleMouseDown = (e: MouseEvent) => {
-      const active = document.activeElement;
-      if (
-        active === ref.current &&
-        ref.current &&
-        !ref.current.contains(e.target as Node)
-      ) {
-        e.preventDefault();
-        ref.current.focus();
-      }
-    };
-
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => {
-      document.removeEventListener("mousedown", handleMouseDown);
-    };
-  }, []);
 
   const getLetter = () => {
     if (!isFirstRow || !wordGuessingArr.length) return "";

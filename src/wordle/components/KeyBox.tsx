@@ -72,7 +72,8 @@ export const KeyBox: React.FC<KeyBoxProps> = ({ keyValue, onKeyClicked }) => {
     keyValue === SpecialCharacter.Enter ||
     keyValue === SpecialCharacter.Backspace;
 
-  const onClickKey = () => {
+  const onClickKey = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
     onKeyClicked(keyValue);
   };
 

@@ -1,10 +1,13 @@
 import React from "react";
 import { AlertPopupProps } from "../types";
 
-const AlertPopup: React.FC<AlertPopupProps> = ({ message }) => {
+const AlertPopup: React.FC<AlertPopupProps> = ({ message, onClose }) => {
   return (
     <div className="h-18 absolute top-13 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border-1 border-gray-900 rounded-md min-w-96 grid place-self-center place-items-center bg-white dark:bg-dark">
-      <button className="cursor-pointer absolute top-3.5 right-3.5">
+      <button
+        onClick={onClose}
+        className="cursor-pointer absolute top-3.5 right-3.5"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

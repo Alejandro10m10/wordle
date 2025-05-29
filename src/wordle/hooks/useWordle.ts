@@ -78,7 +78,7 @@ export const useWordle = ({
 
   const validateGuessWord = () => {
     if (wordGuessing.length !== BOARD_ROWS) {
-      //showAlert("No hay suficientes letras");
+      showAlert("No hay suficientes letras");
       return;
     }
   };

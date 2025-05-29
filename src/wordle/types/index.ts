@@ -51,6 +51,7 @@ export interface KeyTrigger {
 
 export interface AlertPopupProps {
   message: string;
+  onClose: () => void;
 }
 
 export interface AlertContextType {

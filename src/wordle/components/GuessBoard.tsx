@@ -17,9 +17,10 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
     setKeyBoxSelected({ row, column });
   };
 
-  const { wordGuessingArr } = useWordle({
+  const { wordGuessingArr, wordsGuessingArr } = useWordle({
     keyTrigger,
-    ...keyBoxSelected,
+    row: keyBoxSelected.row,
+    column: keyBoxSelected.column,
     onKeyBoxClicked,
   });
 
@@ -33,6 +34,7 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
               row={rowIndex}
               column={columnIndex}
               wordGuessingArr={wordGuessingArr}
+              wordsGuessingArr={wordsGuessingArr}
               onKeyBoxClicked={onKeyBoxClicked}
               keyBoxSelected={keyBoxSelected}
             />

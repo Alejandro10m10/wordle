@@ -13,6 +13,7 @@ export type WordleLayoutProps = {
 
 export interface GuessKeyBoxProps extends KeyBoxSelected {
   wordGuessingArr: string[];
+  wordsGuessingArr: string[];
   onKeyBoxClicked: (row: number, column: number) => void;
   keyBoxSelected: KeyBoxSelected;
 }

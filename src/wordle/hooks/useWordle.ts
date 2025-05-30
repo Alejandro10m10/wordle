@@ -45,12 +45,12 @@ export const useWordle = ({
   column,
   onKeyBoxClicked,
 }: UseWordleProps) => {
-  const [wordToGuess] = useState("PLATO");
+  const [wordToGuess] = useState("PLATA");
   const [wordGuessingArr, setWordGuessingArr] = useState<string[]>(
     initialWordGuessingArr
   );
   const [wordGuessing, setWordGuessing] = useState("");
-  const [wordsGuessingArr, setWordsGuessingArr] = useState<string[]>(["PEDRO"]);
+  const [wordsGuessingArr, setWordsGuessingArr] = useState<string[]>([]);
   const { showAlert } = useAlert();
 
   useEffect(() => {

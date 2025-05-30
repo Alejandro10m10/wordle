@@ -11,6 +11,10 @@
   --color-gray-900: #27272a;
   --scrollColor: #909090;
   --color-box-border: #90caf9;
+  --color-correct: #43a047;
+  --color-present: #e4a81d;
+  --color-absent: #757575;
+  --color-error: #bb3429;
 }
 
 :root {
@@ -49,7 +53,6 @@ html.disable-transitions {
 }
 
 /* Handle on hover */
-
 footer::-webkit-scrollbar-thumb {
   background: transparent;
 }
@@ -58,14 +61,22 @@ footer:hover::-webkit-scrollbar-thumb {
   background: var(--scrollColor);
 }
 
-.no-display {
-  display: none;
+.box-correct {
+  background: var(--color-correct);
 }
 
-.grid {
-  display: grid;
+.box-present {
+  background: var(--color-present);
 }
 
-.no-visible {
-  visibility: hidden;
+.box-absent {
+  background: var(--color-absent);
+}
+
+.box-error {
+  background: var(--color-error);
+}
+
+.box-none {
+  background: transparent;
 }

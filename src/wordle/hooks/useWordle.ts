@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { UseWordleProps } from "../types";
-import { BOARD_ROWS } from "../constants";
+import { BOARD_COLUMNS, BOARD_ROWS } from "../constants";
 import { SpecialCharacter } from "../enums";
 import { useAlert } from "../context";
+
+const initialWordGuessingArr = Array.from({ length: BOARD_ROWS }, (_) => "");
 
 const isBackSpaceKey = (key: string): boolean => {
   return key === SpecialCharacter.Backspace;
@@ -12,11 +14,8 @@ const isEnterKey = (key: string): boolean => {
   return key === SpecialCharacter.Enter;
 };
 
-const isSpecialKey = (key: string): boolean => {
-  return isBackSpaceKey(key) || isEnterKey(key);
-};
-
 const replaceLetterAtWordArr = (
+  wordStr: string,
   wordArray: string[],
   index: number,
   letter: string
@@ -24,11 +23,21 @@ const replaceLetterAtWordArr = (
   const updated = [...wordArray];
 
   const isBackSpace = isBackSpaceKey(letter);
+
+  if (!isBackSpace && wordStr.length >= BOARD_ROWS) return updated;
+
   if (isBackSpace) letter = "";
-  updated[isBackSpace ? index - 1 : index] = letter;
+  if (isBackSpace && !wordStr.length) return updated;
+
+  const letterToUpdate = updated[index] ?? "";
+
+  if (letterToUpdate === "" && isBackSpace) {
+    updated[index - 1] = letter;
+  }
+
+  updated[index] = letter;
   return updated;
 };
-const initialWordGuessingArr = Array.from({ length: BOARD_ROWS }, (_) => "");
 
 export const useWordle = ({
   keyTrigger,
@@ -36,11 +45,12 @@ export const useWordle = ({
   column,
   onKeyBoxClicked,
 }: UseWordleProps) => {
-  const [wordToGuess] = useState("HELLO");
+  const [wordToGuess] = useState("PLATO");
   const [wordGuessingArr, setWordGuessingArr] = useState<string[]>(
     initialWordGuessingArr
   );
   const [wordGuessing, setWordGuessing] = useState("");
+  const [wordsGuessingArr, setWordsGuessingArr] = useState<string[]>(["PEDRO"]);
   const { showAlert } = useAlert();
 
   useEffect(() => {
@@ -57,6 +67,7 @@ export const useWordle = ({
     }
 
     const newWordGuessingArr = replaceLetterAtWordArr(
+      wordGuessing,
       wordGuessingArr,
       column,
       key
@@ -81,11 +92,22 @@ export const useWordle = ({
       showAlert("No hay suficientes letras");
       return;
     }
+
+    if (wordsGuessingArr.length >= BOARD_COLUMNS) return;
+
+    setWordsGuessingArr([...wordsGuessingArr, wordGuessing]);
+    setWordGuessingArr([]);
+    setWordGuessing("");
   };
+
+  useEffect(() => {
+    onKeyBoxClicked(wordsGuessingArr.length, 0);
+  }, [wordsGuessingArr]);
 
   return {
     wordToGuess,
     wordGuessingArr,
     wordGuessing,
+    wordsGuessingArr,
   };
 };

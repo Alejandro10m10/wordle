@@ -7,10 +7,12 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   column,
   onKeyBoxClicked,
   keyBoxSelected,
+  wordsGuessingArr,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const isFirstRow = row === 0;
+  const currentGuessRow = wordsGuessingArr.length;
+  const isCurrentGuessRow = currentGuessRow === row;
 
   const isKeyBoxSelected =
     row === keyBoxSelected.row && column === keyBoxSelected.column;
@@ -18,16 +20,19 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   const onGuessKeyBoxClicked = () => {
     ref.current?.focus();
     ref.current?.blur();
-    if (!isFirstRow) return;
+    if (!isCurrentGuessRow) return;
     onKeyBoxClicked(row, column);
   };
 
   const getLetter = () => {
-    if (!isFirstRow || !wordGuessingArr.length) return "";
-
-    if (keyBoxSelected.column === column) {
-      return wordGuessingArr[keyBoxSelected.column];
+    if (!isCurrentGuessRow) {
+      const wordGuessingArrBefore = wordsGuessingArr[row];
+      return wordGuessingArrBefore && wordGuessingArrBefore[column];
     }
+
+    if (!wordGuessingArr.length) return "";
+
+    if (isKeyBoxSelected) return wordGuessingArr[keyBoxSelected.column];
 
     return wordGuessingArr[column];
   };
@@ -36,12 +41,12 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
     <div
       ref={ref}
       onClick={onGuessKeyBoxClicked}
-      {...(isFirstRow ? { tabIndex: 0 } : {})}
+      {...(isKeyBoxSelected ? { tabIndex: 0 } : {})}
       className={`w-10 h-10 select-none rounded-md border-2 ${
         isKeyBoxSelected
           ? "border-box-border focus:border-box-border focus:outline-none"
           : "border-gray-400"
-      } ${isFirstRow && "cursor-pointer"}`}
+      } ${isCurrentGuessRow && "cursor-pointer"}`}
     >
       <p className="h-full grid place-items-center font-bold text-2xl">
         {getLetter()}

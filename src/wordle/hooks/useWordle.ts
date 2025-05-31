@@ -50,7 +50,10 @@ export const useWordle = ({
     initialWordGuessingArr
   );
   const [wordGuessing, setWordGuessing] = useState("");
-  const [wordsGuessingArr, setWordsGuessingArr] = useState<string[]>([]);
+  const [wordsGuessingArr, setWordsGuessingArr] = useState<string[]>([
+    "PALTO",
+    "PLATO",
+  ]);
   const { showAlert } = useAlert();
 
   useEffect(() => {

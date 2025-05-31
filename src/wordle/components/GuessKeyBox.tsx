@@ -31,11 +31,14 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   wordGuessingArr,
   wordsGuessingArr,
   wordToGuess,
+  animationDelay,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const currentGuessRow = wordsGuessingArr.length;
   const isCurrentGuessRow = currentGuessRow === row;
+
+  console.log(currentGuessRow, row);
 
   const isKeyBoxSelected =
     row === keyBoxSelected.row && column === keyBoxSelected.column;
@@ -115,13 +118,19 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
       ref={ref}
       onClick={onGuessKeyBoxClicked}
       {...(isKeyBoxSelected ? { tabIndex: 0 } : {})}
-      className={`w-10 h-10 select-none rounded-md border-2  ${
+      className={` w-10 h-10 select-none rounded-md border-2  ${
         isKeyBoxSelected
           ? "border-box-border focus:border-box-border focus:outline-none"
           : "border-gray-400"
-      } ${getBgColor()} ${isCurrentGuessRow && "cursor-pointer"}`}
+      } ${getBgColor()} ${isCurrentGuessRow && "cursor-pointer"} ${
+        currentGuessRow > row && "flip-vertical"
+      }`}
+      style={{ animationDelay: `${animationDelay}s` }}
     >
-      <p className="h-full grid place-items-center font-bold text-2xl">
+      <p
+        className="h-full grid place-items-center font-bold text-2xl show-after-delay"
+        style={{ animationDelay: `${animationDelay + 0.15}s` }} // 1s = duration of flip
+      >
         {letter}
       </p>
     </div>

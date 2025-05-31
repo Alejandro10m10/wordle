@@ -17,6 +17,7 @@ export interface GuessKeyBoxProps extends KeyBoxSelected {
   wordToGuess: string;
   onKeyBoxClicked: (row: number, column: number) => void;
   keyBoxSelected: KeyBoxSelected;
+  animationDelay: number;
 }
 
 interface OnKeyClickedProps {

@@ -80,3 +80,31 @@ footer:hover::-webkit-scrollbar-thumb {
 .box-none {
   background: transparent;
 }
+
+.flip-vertical {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+
+  animation: flipX 0.6s ease forwards;
+}
+
+@keyframes flipX {
+  0% {
+    transform: rotateX(180deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.show-after-delay {
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

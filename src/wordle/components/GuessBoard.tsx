@@ -28,18 +28,22 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
     <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">
       {BOARD_COLUMNS_ARRAY.map((_, rowIndex) => (
         <div key={`keyboard-guess-row-${rowIndex}`} className="flex gap-1">
-          {BOARD_ROWS_ARRAY.map((_, columnIndex) => (
-            <GuessKeyBox
-              key={`keyboard-guess-column-${columnIndex}`}
-              row={rowIndex}
-              column={columnIndex}
-              wordGuessingArr={wordGuessingArr}
-              wordsGuessingArr={wordsGuessingArr}
-              onKeyBoxClicked={onKeyBoxClicked}
-              keyBoxSelected={keyBoxSelected}
-              wordToGuess={wordToGuess}
-            />
-          ))}
+          {BOARD_ROWS_ARRAY.map((_, columnIndex) => {
+            const delay = columnIndex * 0.2;
+            return (
+              <GuessKeyBox
+                key={`keyboard-guess-column-${columnIndex}`}
+                row={rowIndex}
+                column={columnIndex}
+                wordGuessingArr={wordGuessingArr}
+                wordsGuessingArr={wordsGuessingArr}
+                onKeyBoxClicked={onKeyBoxClicked}
+                keyBoxSelected={keyBoxSelected}
+                wordToGuess={wordToGuess}
+                animationDelay={delay}
+              />
+            );
+          })}
         </div>
       ))}
     </div>

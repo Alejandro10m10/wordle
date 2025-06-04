@@ -5,10 +5,13 @@ import {
 } from "../constants";
 import { GuessKeyBox } from "./GuessKeyBox";
 import { GuessBoardProps } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWordle } from "../hooks";
+import { SpecialCharacter } from "../enums";
 
 export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
+  const [animatedRow, setAnimatedRow] = useState<number>(0);
+
   const [keyBoxSelected, setKeyBoxSelected] = useState(
     INITIAL_KEY_BOX_SELECTED
   );
@@ -23,6 +26,13 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
     column: keyBoxSelected.column,
     onKeyBoxClicked,
   });
+
+  useEffect(() => {
+    if (keyTrigger.key !== SpecialCharacter.Enter) return;
+    if (wordGuessingArr.join("").length < 5) return;
+
+    setAnimatedRow(keyBoxSelected.row);
+  }, [wordsGuessingArr, keyTrigger.id]);
 
   return (
     <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">
@@ -41,6 +51,7 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
                 keyBoxSelected={keyBoxSelected}
                 wordToGuess={wordToGuess}
                 animationDelay={delay}
+                shouldAnimate={animatedRow === rowIndex}
               />
             );
           })}

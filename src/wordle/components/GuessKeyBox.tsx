@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GuessKeyBoxProps } from "../types";
 
 const getLetterOccurrences = (word: string): Record<string, number> => {
@@ -32,13 +32,13 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   wordsGuessingArr,
   wordToGuess,
   animationDelay,
+  shouldAnimate,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const refParagraph = useRef<HTMLParagraphElement>(null);
 
   const currentGuessRow = wordsGuessingArr.length;
   const isCurrentGuessRow = currentGuessRow === row;
-
-  console.log(currentGuessRow, row);
 
   const isKeyBoxSelected =
     row === keyBoxSelected.row && column === keyBoxSelected.column;
@@ -113,6 +113,15 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
     return "box-absent border-0!";
   };
 
+  useEffect(() => {
+    if (!shouldAnimate || !refParagraph.current) return;
+
+    const el = refParagraph.current;
+    el.classList.remove("show-after-delay");
+    void el.offsetWidth;
+    el.classList.add("show-after-delay");
+  }, [shouldAnimate]);
+
   return (
     <div
       ref={ref}
@@ -128,6 +137,7 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
       style={{ animationDelay: `${animationDelay}s` }}
     >
       <p
+        ref={refParagraph}
         className="h-full grid place-items-center font-bold text-2xl show-after-delay"
         style={{ animationDelay: `${animationDelay + 0.15}s` }} // 1s = duration of flip
       >

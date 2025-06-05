@@ -61,6 +61,11 @@ footer:hover::-webkit-scrollbar-thumb {
   background: var(--scrollColor);
 }
 
+.box {
+  background-color: transparent;
+  transition: background-color 0.4s ease-in-out;
+}
+
 .box-correct {
   background: var(--color-correct);
 }
@@ -89,9 +94,11 @@ footer:hover::-webkit-scrollbar-thumb {
 
 @keyframes flipX {
   0% {
+    background: transparent;
     transform: rotateX(180deg);
   }
   100% {
+    border-color: none;
     transform: rotateX(0deg);
   }
 }

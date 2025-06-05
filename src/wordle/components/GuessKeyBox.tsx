@@ -32,8 +32,10 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   wordsGuessingArr,
   wordToGuess,
   animationDelay,
-  shouldAnimate,
+  animatedRow,
 }) => {
+  const [showColor, setShowColor] = useState(false);
+
   const ref = useRef<HTMLDivElement>(null);
   const refParagraph = useRef<HTMLParagraphElement>(null);
 
@@ -113,28 +115,51 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
     return "box-absent border-0!";
   };
 
+  const bgClass = showColor ? getBgColor() : "box-none";
+
   useEffect(() => {
-    if (!shouldAnimate || !refParagraph.current) return;
+    const timer = setTimeout(() => {
+      setShowColor(true);
+    }, 1000 * animationDelay);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!showColor) return;
+    if (animatedRow !== row || !refParagraph.current) return;
 
     const el = refParagraph.current;
-    el.classList.remove("show-after-delay");
-    void el.offsetWidth;
-    el.classList.add("show-after-delay");
-  }, [shouldAnimate]);
+    el?.classList.remove("show-after-delay");
+
+    const classesToHandle = bgClass.split(" ");
+    ref.current?.classList.remove(...classesToHandle);
+
+    void el?.offsetWidth;
+    el?.classList.add("show-after-delay");
+
+    setTimeout(() => {
+      ref.current?.classList.add(...classesToHandle);
+    }, 1200 * animationDelay);
+  }, [animatedRow, wordsGuessingArr]);
 
   return (
     <div
       ref={ref}
       onClick={onGuessKeyBoxClicked}
       {...(isKeyBoxSelected ? { tabIndex: 0 } : {})}
-      className={` w-10 h-10 select-none rounded-md border-2  ${
+      className={`w-10 h-10 select-none rounded-md border-2  ${
         isKeyBoxSelected
           ? "border-box-border focus:border-box-border focus:outline-none"
           : "border-gray-400"
-      } ${getBgColor()} ${isCurrentGuessRow && "cursor-pointer"} ${
+      } box ${bgClass} ${isCurrentGuessRow && "cursor-pointer"} ${
         currentGuessRow > row && "flip-vertical"
       }`}
-      style={{ animationDelay: `${animationDelay}s` }}
+      style={{
+        animationDelay: `${animationDelay}s`,
+        transitionDelay: `${animationDelay}s`,
+        transition: "background-color 0.4s ease-in-out",
+      }}
     >
       <p
         ref={refParagraph}

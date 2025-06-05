@@ -32,7 +32,7 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
     if (wordGuessingArr.join("").length < 5) return;
 
     setAnimatedRow(keyBoxSelected.row);
-  }, [wordsGuessingArr, keyTrigger.id]);
+  }, [wordGuessingArr, keyTrigger.key]);
 
   return (
     <div className="keyboard-guess flex items-center gap-1 flex-col w-full mt-1.5">
@@ -51,7 +51,7 @@ export const GuessBoard: React.FC<GuessBoardProps> = ({ keyTrigger }) => {
                 keyBoxSelected={keyBoxSelected}
                 wordToGuess={wordToGuess}
                 animationDelay={delay}
-                shouldAnimate={animatedRow === rowIndex}
+                animatedRow={animatedRow}
               />
             );
           })}

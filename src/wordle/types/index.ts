@@ -18,7 +18,7 @@ export interface GuessKeyBoxProps extends KeyBoxSelected {
   onKeyBoxClicked: (row: number, column: number) => void;
   keyBoxSelected: KeyBoxSelected;
   animationDelay: number;
-  shouldAnimate: boolean;
+  animatedRow: number;
 }
 
 interface OnKeyClickedProps {

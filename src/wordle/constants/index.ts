@@ -38,3 +38,10 @@ export const REPLACE_CHART_AT = (
 ) => {
   return `${str.slice(0, index)}${newChar}${str.slice(index + 1)}`;
 };
+
+export const isSpecialCharacter = (character: string): boolean => {
+  return (
+    character === SpecialCharacter.Enter ||
+    character === SpecialCharacter.Backspace
+  );
+};

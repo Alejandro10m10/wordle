@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GuessKeyBoxProps } from "../types";
 
 const getLetterOccurrences = (word: string): Record<string, number> => {
-  const occurrences: Record<string, number> = {};
-  for (const char of word) {
-    occurrences[char] = (occurrences[char] || 0) + 1;
-  }
-  return occurrences;
+  return [...word].reduce<Record<string, number>>((acc, char) => {
+    acc[char] = (acc[char] || 0) + 1;
+    return acc;
+  }, {});
 };
 
-const countLetterOccurrences = (letter: string, word: string) => {
-  return [...word].filter((char) => char === letter).length;
-};
+const countLetterOccurrences = (letter: string, word: string) =>
+  [...word].filter((char) => char === letter).length;
 
 const getAllIndicesOfLetter = (letter: string, word: string): number[] => {
   const indices: number[] = [];
@@ -36,8 +34,8 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
 }) => {
   const [showColor, setShowColor] = useState(false);
 
-  const ref = useRef<HTMLDivElement>(null);
-  const refParagraph = useRef<HTMLParagraphElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
 
   const currentGuessRow = wordsGuessingArr.length;
   const isCurrentGuessRow = currentGuessRow === row;
@@ -45,11 +43,14 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
   const isKeyBoxSelected =
     row === keyBoxSelected.row && column === keyBoxSelected.column;
 
-  const occurrences = getLetterOccurrences(wordToGuess);
+  const occurrences = useMemo(
+    () => getLetterOccurrences(wordToGuess),
+    [wordToGuess]
+  );
 
   const onGuessKeyBoxClicked = () => {
-    ref.current?.focus();
-    ref.current?.blur();
+    boxRef.current?.focus();
+    boxRef.current?.blur();
     if (!isCurrentGuessRow) return;
     onKeyBoxClicked(row, column);
   };
@@ -69,7 +70,7 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
 
   const letter = getLetter();
 
-  const getBgColor = () => {
+  const getBgColor = useMemo(() => {
     const key = letter || "";
     if (isCurrentGuessRow || key === "") return "box-none";
 
@@ -113,48 +114,55 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
     }
 
     return "box-absent border-0!";
-  };
-
-  const bgClass = showColor ? getBgColor() : "box-none";
+  }, [
+    letter,
+    isCurrentGuessRow,
+    wordToGuess,
+    column,
+    wordsGuessingArr,
+    row,
+    occurrences,
+  ]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowColor(true);
-    }, 1000 * animationDelay);
-
+    const timer = setTimeout(() => setShowColor(true), 1000 * animationDelay);
     return () => clearTimeout(timer);
-  }, []);
+  }, [animationDelay]);
 
   useEffect(() => {
-    if (!showColor) return;
-    if (animatedRow !== row || !refParagraph.current) return;
+    if (!showColor || animatedRow !== row || !paragraphRef.current) return;
 
-    const el = refParagraph.current;
-    el?.classList.remove("show-after-delay");
-
-    const classesToHandle = bgClass.split(" ");
-    ref.current?.classList.remove(...classesToHandle);
-
-    void el?.offsetWidth;
-    el?.classList.add("show-after-delay");
+    const el = paragraphRef.current;
+    const classes = getBgColor.split(" ");
+    el.classList.remove("show-after-delay");
+    boxRef.current?.classList.remove(...classes);
+    void el.offsetWidth;
+    el.classList.add("show-after-delay");
 
     setTimeout(() => {
-      ref.current?.classList.add(...classesToHandle);
+      boxRef.current?.classList.add(...classes);
     }, 1200 * animationDelay);
-  }, [animatedRow, wordsGuessingArr]);
+  }, [animatedRow, row, animationDelay, getBgColor]);
+
+  const boxClass = [
+    "w-10 h-10 select-none rounded-md border-2 box",
+    isKeyBoxSelected
+      ? "border-box-border focus:border-box-border focus:outline-none"
+      : "border-gray-400",
+    showColor ? getBgColor : "box-none",
+    isCurrentGuessRow && "cursor-pointer",
+    currentGuessRow > row && "flip-vertical",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div
-      ref={ref}
+      ref={boxRef}
+      role="guessBox"
       onClick={onGuessKeyBoxClicked}
-      {...(isKeyBoxSelected ? { tabIndex: 0 } : {})}
-      className={`w-10 h-10 select-none rounded-md border-2  ${
-        isKeyBoxSelected
-          ? "border-box-border focus:border-box-border focus:outline-none"
-          : "border-gray-400"
-      } box ${bgClass} ${isCurrentGuessRow && "cursor-pointer"} ${
-        currentGuessRow > row && "flip-vertical"
-      }`}
+      tabIndex={isKeyBoxSelected ? 0 : undefined}
+      className={boxClass}
       style={{
         animationDelay: `${animationDelay}s`,
         transitionDelay: `${animationDelay}s`,
@@ -162,9 +170,9 @@ export const GuessKeyBox: React.FC<GuessKeyBoxProps> = ({
       }}
     >
       <p
-        ref={refParagraph}
+        ref={paragraphRef}
         className="h-full grid place-items-center font-bold text-2xl show-after-delay"
-        style={{ animationDelay: `${animationDelay + 0.15}s` }} // 1s = duration of flip
+        style={{ animationDelay: `${animationDelay + 0.15}s` }}
       >
         {letter}
       </p>
